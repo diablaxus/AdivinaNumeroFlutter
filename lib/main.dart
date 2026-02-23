@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Adivina el Número',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.teal,
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   late int _numeroSecreto;
   int _intentos = 0;
-  int _intentosRestantes = 5; // Límite de 5 intentos
+  int _intentosRestantes = 10; // Límite de 10 intentos
   String _mensaje = '';
   final TextEditingController _controller = TextEditingController();
   bool _juegoTerminado = false;
@@ -43,10 +43,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   late Animation<Offset> _slideAnimation;
 
   final List<String> _mensajesIniciales = [
-    '🎯 ¿Podrás adivinar el número? (5 intentos)',
-    '🔮 Concéntrate... solo 5 oportunidades',
-    '✨ La suerte está de tu lado - 5 intentos',
-    '🌟 Adivina el número secreto en 5 intentos',
+    '🚀 ¡Despega hacia la victoria! (10 intentos)',
+    '🎪 ¡Que comience el espectáculo! 10 oportunidades',
+    '🎮 ¡Nivel iniciado! Tienes 10 vidas',
+    '🎲 ¡A rodar los dados! 10 intentos para ganar',
   ];
 
   @override
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     setState(() {
       _numeroSecreto = Random().nextInt(100) + 1;
       _intentos = 0;
-      _intentosRestantes = 5;
+      _intentosRestantes = 10;
       _mensaje = _mensajesIniciales[Random().nextInt(_mensajesIniciales.length)];
       _juegoTerminado = false;
       _juegoPerdido = false;
@@ -108,15 +108,15 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       _controller.clear();
 
       if (adivinanza == _numeroSecreto) {
-        _mensaje = '🎉 ¡CORRECTO! 🎉\nLo lograste en $_intentos ${_intentos == 1 ? 'intento' : 'intentos'}';
+        _mensaje = '� ¡INCREÍBLE! ¡GANASTE! 🏆\n¡Acertaste en $_intentos ${_intentos == 1 ? 'intento' : 'intentos'}!';
         _juegoTerminado = true;
       } else if (_intentosRestantes == 0) {
-        _mensaje = '😢 ¡GAME OVER! 😢\nEl número secreto era $_numeroSecreto';
+        _mensaje = '💥 ¡SE ACABARON LOS INTENTOS! 💥\nEl número mágico era $_numeroSecreto';
         _juegoPerdido = true;
       } else if (adivinanza < _numeroSecreto) {
-        _mensaje = '⬆️ ¡Más alto! (Te quedan $_intentosRestantes intentos)';
+        _mensaje = '🔥 ¡Sube la apuesta! El número es mayor (Quedan $_intentosRestantes intentos)';
       } else {
-        _mensaje = '⬇️ ¡Más bajo! (Te quedan $_intentosRestantes intentos)';
+        _mensaje = '❄️ ¡Enfría un poco! El número es menor (Quedan $_intentosRestantes intentos)';
       }
     });
     
@@ -141,9 +141,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   Color _getMensajeColor() {
     if (_juegoTerminado) return Colors.green;
     if (_juegoPerdido) return Colors.red;
-    if (_mensaje.contains('alto')) return Colors.blue;
-    if (_mensaje.contains('bajo')) return Colors.red;
-    return Colors.indigo;
+    if (_mensaje.contains('mayor')) return Colors.deepOrange;
+    if (_mensaje.contains('menor')) return Colors.blue;
+    return Colors.teal;
   }
 
   @override
@@ -162,9 +162,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.indigo.shade50,
+              Colors.teal.shade50,
               Colors.white,
-              Colors.indigo.shade50,
+              Colors.teal.shade50,
             ],
           ),
         ),
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.indigo.withOpacity(0.2),
+                              color: Colors.teal.withOpacity(0.2),
                               blurRadius: 20,
                               spreadRadius: 5,
                             ),
@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                               child: Icon(
                                 _juegoPerdido ? Icons.sentiment_dissatisfied : Icons.psychology_alt,
                                 size: 60,
-                                color: _juegoPerdido ? Colors.red : Colors.indigo,
+                                color: _juegoPerdido ? Colors.red : Colors.teal,
                               ),
                             ),
                           ],
@@ -248,10 +248,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                         decoration: BoxDecoration(
-                          color: _intentosRestantes <= 2 ? Colors.red.shade50 : Colors.indigo.shade50,
+                          color: _intentosRestantes <= 2 ? Colors.red.shade50 : Colors.teal.shade50,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
-                            color: _intentosRestantes <= 2 ? Colors.red.shade200 : Colors.indigo.shade200,
+                            color: _intentosRestantes <= 2 ? Colors.red.shade200 : Colors.teal.shade200,
                             width: 2,
                           ),
                         ),
@@ -260,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           children: [
                             Icon(
                               _intentosRestantes <= 2 ? Icons.warning : Icons.hourglass_bottom,
-                              color: _intentosRestantes <= 2 ? Colors.red : Colors.indigo,
+                              color: _intentosRestantes <= 2 ? Colors.red : Colors.teal,
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -268,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: _intentosRestantes <= 2 ? Colors.red : Colors.indigo,
+                                color: _intentosRestantes <= 2 ? Colors.red : Colors.teal,
                               ),
                             ),
                           ],
@@ -283,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.indigo.withOpacity(0.1),
+                              color: Colors.teal.withOpacity(0.1),
                               blurRadius: 10,
                               offset: const Offset(0, 5),
                             ),
@@ -304,7 +304,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            prefixIcon: const Icon(Icons.casino, color: Colors.indigo),
+                            prefixIcon: const Icon(Icons.casino, color: Colors.teal),
                             suffixIcon: _controller.text.isNotEmpty
                                 ? IconButton(
                                     icon: const Icon(Icons.clear, color: Colors.grey),
@@ -327,11 +327,11 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _juegoTerminado 
                                 ? Colors.green 
-                                : (_juegoPerdido ? Colors.red : Colors.indigo),
+                                : (_juegoPerdido ? Colors.red : Colors.teal),
                             foregroundColor: Colors.white,
                             disabledBackgroundColor: _juegoTerminado 
                                 ? Colors.green.shade100 
-                                : (_juegoPerdido ? Colors.red.shade100 : Colors.indigo.shade100),
+                                : (_juegoPerdido ? Colors.red.shade100 : Colors.teal.shade100),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -373,8 +373,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           child: OutlinedButton.icon(
                             onPressed: _iniciarJuego,
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.indigo,
-                              side: const BorderSide(color: Colors.indigo, width: 2),
+                              foregroundColor: Colors.teal,
+                              side: const BorderSide(color: Colors.teal, width: 2),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
